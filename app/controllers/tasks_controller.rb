@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
-    render json: @contacts
+    render json: @tasks
   end
 
   def create
@@ -9,13 +9,13 @@ class TasksController < ApplicationController
     if @task.save
       render json: @task, status: 201
     else
-      render json: @contact.errors, status: 422
+      render json: @task.errors, status: 422
     end
   end
 
   def show
     @task = Task.find(params[:id])
-    render json: @contact
+    render json: @task
   end
 
   def update
@@ -23,7 +23,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       head :no_content
     else
-      render json: @contact.errors, status: 422
+      render json: @task.errors, status: 422
     end
   end
 
@@ -35,6 +35,6 @@ class TasksController < ApplicationController
 
 private
   def task_params
-    params.fetch(:task).permit(:name)
+    params.fetch(:task).permit(:name, :completed)
   end
 end
